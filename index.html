@@ -127,95 +127,95 @@
     }
     .btn-glow:hover::before { left: 100%; }
 
-
-
-    /* Our Brands rolling counter cards */
-    @keyframes brand-roll-up {
+    /* Our Brands horizontal marquee */
+    @keyframes fn-marquee-left {
       0% { transform: translate3d(0, 0, 0); }
-      100% { transform: translate3d(0, -50%, 0); }
+      100% { transform: translate3d(-50%, 0, 0); }
     }
-    .brand-counter-card {
+    @keyframes fn-marquee-right {
+      0% { transform: translate3d(-50%, 0, 0); }
+      100% { transform: translate3d(0, 0, 0); }
+    }
+    .fn-marquee-wrap {
       position: relative;
-      min-height: 140px;
-      border-radius: 1rem;
-      overflow: hidden;
+      padding: 24px;
+      border-radius: 2rem;
       background: #ffffff;
-      border: 1px solid #e8eaee;
-      box-shadow: 0 14px 40px rgba(10, 11, 15, 0.06);
-      transition: transform .45s ease, box-shadow .45s ease, border-color .45s ease;
-      isolation: isolate;
+      border: 1px solid #eeeeee;
+      box-shadow: 0 18px 45px rgba(10, 11, 15, 0.05);
+      overflow: hidden;
     }
-    .brand-counter-card::before {
+    .fn-marquee-wrap::before,
+    .fn-marquee-wrap::after {
       content: '';
       position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(circle at top right, rgba(244,49,49,.10), transparent 38%),
-        linear-gradient(180deg, rgba(255,255,255,1), rgba(248,249,251,1));
-      z-index: 0;
-    }
-    .brand-counter-card::after {
-      content: '';
-      position: absolute;
-      left: 18px;
-      right: 18px;
-      top: 50%;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(244,49,49,.18), transparent);
-      opacity: .7;
-      z-index: 1;
+      top: 0;
+      bottom: 0;
+      width: 72px;
+      z-index: 2;
       pointer-events: none;
     }
-    .brand-counter-card:hover {
-      transform: translateY(-4px);
-      border-color: rgba(244,49,49,.35);
-      box-shadow: 0 22px 60px rgba(10, 11, 15, 0.10);
+    .fn-marquee-wrap::before {
+      left: 0;
+      background: linear-gradient(90deg, #ffffff 0%, rgba(255,255,255,0) 100%);
     }
-    .brand-mask {
-      position: absolute;
-      inset: 0;
+    .fn-marquee-wrap::after {
+      right: 0;
+      background: linear-gradient(270deg, #ffffff 0%, rgba(255,255,255,0) 100%);
+    }
+    .fn-marquee-row {
+      position: relative;
       overflow: hidden;
-      z-index: 2;
-      -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 22%, #000 78%, transparent 100%);
-      mask-image: linear-gradient(to bottom, transparent 0%, #000 22%, #000 78%, transparent 100%);
     }
-    .brand-track {
+    .fn-marquee-track {
       display: flex;
-      flex-direction: column;
-      animation: brand-roll-up 34s linear infinite;
+      align-items: center;
+      gap: 16px;
+      width: max-content;
       will-change: transform;
+      backface-visibility: hidden;
       transform: translate3d(0,0,0);
+      animation: fn-marquee-left 42s linear infinite;
     }
-    .brand-track.delay-1 { animation-delay: -6s; }
-    .brand-track.delay-2 { animation-delay: -12s; }
-    .brand-track.delay-3 { animation-delay: -18s; }
-    .brand-track.delay-4 { animation-delay: -24s; }
-    .brand-logo-slide {
-      height: 140px;
-      min-height: 140px;
+    .fn-marquee-track.reverse {
+      animation-name: fn-marquee-right;
+      animation-duration: 46s;
+    }
+    .fn-brand-chip {
+      flex: 0 0 auto;
+      width: 190px;
+      height: 96px;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 30px 34px;
+      padding: 20px 24px;
+      border-radius: 1rem;
+      background: #ffffff;
+      border: 1px solid #efefef;
+      box-shadow: 0 8px 18px rgba(10, 11, 15, 0.035);
     }
-    .brand-logo-slide img {
-      max-width: 82%;
-      max-height: 68px;
+    .fn-brand-chip img {
       width: auto;
       height: auto;
-      object-fit: contain;
+      max-width: 100%;
+      max-height: 54px;
       display: block;
-      filter: drop-shadow(0 10px 18px rgba(10,11,15,.08));
+      object-fit: contain;
       transform: translateZ(0);
     }
     @media (max-width: 767px) {
-      .brand-counter-card { min-height: 118px; }
-      .brand-logo-slide { height: 118px; min-height: 118px; padding: 26px 24px; }
-      .brand-logo-slide img { max-height: 54px; max-width: 86%; }
+      .fn-marquee-wrap { padding: 16px; border-radius: 1.5rem; }
+      .fn-marquee-wrap::before, .fn-marquee-wrap::after { width: 28px; }
+      .fn-brand-chip { width: 150px; height: 82px; padding: 16px 18px; }
+      .fn-brand-chip img { max-height: 44px; }
+      .fn-marquee-track { gap: 12px; animation-duration: 34s; }
+      .fn-marquee-track.reverse { animation-duration: 38s; }
     }
     @media (prefers-reduced-motion: reduce) {
-      .brand-track { animation-duration: 90s; }
+      .fn-marquee-track, .fn-marquee-track.reverse { animation-duration: 120s; }
     }
+
+
 
     /* ===================== NEW HEADER STYLES ===================== */
     .fnx-wrap{ width:min(1280px,94%); margin:0 auto; }
@@ -643,250 +643,58 @@
             </div>
           </div>
 
+
           <div class="reveal">
             <div class="flex items-center gap-3 mb-6">
               <span class="text-[11px] font-black uppercase tracking-[0.25em] text-[#505866]">OUR BRANDS</span>
               <span class="h-px flex-1 bg-[#e8eaee]"></span>
             </div>
-            <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
-              <div class="brand-counter-card">
-                <div class="brand-mask">
-                  <div class="brand-track">
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Glanbia-ON.webp" alt="Glanbia ON logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Muscle-Tech.webp" alt="Muscle Tech logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Rule1.webp" alt="Rule1 logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Glanbia-ISO-Pure.webp" alt="Glanbia ISO Pure logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Nutrex.webp" alt="Nutrex logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Cellucor.webp" alt="Cellucor logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Dymatize.webp" alt="Dymatize logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/ProSupps.webp" alt="ProSupps logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Scivation.webp" alt="Scivation logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Quest.webp" alt="Quest logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/MHP.webp" alt="MHP logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Muscle-Meds.webp" alt="Muscle Meds logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/1BPI.webp" alt="1BPI logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Gaspari.webp" alt="Gaspari logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Universal-Nutrition.webp" alt="Universal Nutrition logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/EFX.webp" alt="EFX logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/King-Line.webp" alt="King Line logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Muscle-Pharm.webp" alt="Muscle Pharm logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Russian-Bear.webp" alt="Russian Bear logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Smart-Shake.webp" alt="Smart Shake logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Personal-Record.webp" alt="Personal Record logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Glanbia-ON.webp" alt="Glanbia ON logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Muscle-Tech.webp" alt="Muscle Tech logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Rule1.webp" alt="Rule1 logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Glanbia-ISO-Pure.webp" alt="Glanbia ISO Pure logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Nutrex.webp" alt="Nutrex logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Cellucor.webp" alt="Cellucor logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Dymatize.webp" alt="Dymatize logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/ProSupps.webp" alt="ProSupps logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Scivation.webp" alt="Scivation logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Quest.webp" alt="Quest logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/MHP.webp" alt="MHP logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Muscle-Meds.webp" alt="Muscle Meds logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/1BPI.webp" alt="1BPI logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Gaspari.webp" alt="Gaspari logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Universal-Nutrition.webp" alt="Universal Nutrition logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/EFX.webp" alt="EFX logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/King-Line.webp" alt="King Line logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Muscle-Pharm.webp" alt="Muscle Pharm logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Russian-Bear.webp" alt="Russian Bear logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Smart-Shake.webp" alt="Smart Shake logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Personal-Record.webp" alt="Personal Record logo" loading="lazy"></div>
-                  </div>
-                </div>
-              </div>
-              <div class="brand-counter-card">
-                <div class="brand-mask">
-                  <div class="brand-track delay-1">
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Nutrex.webp" alt="Nutrex logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Cellucor.webp" alt="Cellucor logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Dymatize.webp" alt="Dymatize logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/ProSupps.webp" alt="ProSupps logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Scivation.webp" alt="Scivation logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Quest.webp" alt="Quest logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/MHP.webp" alt="MHP logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Muscle-Meds.webp" alt="Muscle Meds logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/1BPI.webp" alt="1BPI logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Gaspari.webp" alt="Gaspari logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Universal-Nutrition.webp" alt="Universal Nutrition logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/EFX.webp" alt="EFX logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/King-Line.webp" alt="King Line logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Muscle-Pharm.webp" alt="Muscle Pharm logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Russian-Bear.webp" alt="Russian Bear logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Smart-Shake.webp" alt="Smart Shake logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Personal-Record.webp" alt="Personal Record logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Glanbia-ON.webp" alt="Glanbia ON logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Muscle-Tech.webp" alt="Muscle Tech logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Rule1.webp" alt="Rule1 logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Glanbia-ISO-Pure.webp" alt="Glanbia ISO Pure logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Nutrex.webp" alt="Nutrex logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Cellucor.webp" alt="Cellucor logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Dymatize.webp" alt="Dymatize logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/ProSupps.webp" alt="ProSupps logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Scivation.webp" alt="Scivation logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Quest.webp" alt="Quest logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/MHP.webp" alt="MHP logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Muscle-Meds.webp" alt="Muscle Meds logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/1BPI.webp" alt="1BPI logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Gaspari.webp" alt="Gaspari logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Universal-Nutrition.webp" alt="Universal Nutrition logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/EFX.webp" alt="EFX logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/King-Line.webp" alt="King Line logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Muscle-Pharm.webp" alt="Muscle Pharm logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Russian-Bear.webp" alt="Russian Bear logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Smart-Shake.webp" alt="Smart Shake logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Personal-Record.webp" alt="Personal Record logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Glanbia-ON.webp" alt="Glanbia ON logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Muscle-Tech.webp" alt="Muscle Tech logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Rule1.webp" alt="Rule1 logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Glanbia-ISO-Pure.webp" alt="Glanbia ISO Pure logo" loading="lazy"></div>
-                  </div>
-                </div>
-              </div>
-              <div class="brand-counter-card">
-                <div class="brand-mask">
-                  <div class="brand-track delay-2">
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Scivation.webp" alt="Scivation logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Quest.webp" alt="Quest logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/MHP.webp" alt="MHP logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Muscle-Meds.webp" alt="Muscle Meds logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/1BPI.webp" alt="1BPI logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Gaspari.webp" alt="Gaspari logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Universal-Nutrition.webp" alt="Universal Nutrition logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/EFX.webp" alt="EFX logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/King-Line.webp" alt="King Line logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Muscle-Pharm.webp" alt="Muscle Pharm logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Russian-Bear.webp" alt="Russian Bear logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Smart-Shake.webp" alt="Smart Shake logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Personal-Record.webp" alt="Personal Record logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Glanbia-ON.webp" alt="Glanbia ON logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Muscle-Tech.webp" alt="Muscle Tech logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Rule1.webp" alt="Rule1 logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Glanbia-ISO-Pure.webp" alt="Glanbia ISO Pure logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Nutrex.webp" alt="Nutrex logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Cellucor.webp" alt="Cellucor logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Dymatize.webp" alt="Dymatize logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/ProSupps.webp" alt="ProSupps logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Scivation.webp" alt="Scivation logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Quest.webp" alt="Quest logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/MHP.webp" alt="MHP logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Muscle-Meds.webp" alt="Muscle Meds logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/1BPI.webp" alt="1BPI logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Gaspari.webp" alt="Gaspari logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Universal-Nutrition.webp" alt="Universal Nutrition logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/EFX.webp" alt="EFX logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/King-Line.webp" alt="King Line logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Muscle-Pharm.webp" alt="Muscle Pharm logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Russian-Bear.webp" alt="Russian Bear logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Smart-Shake.webp" alt="Smart Shake logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Personal-Record.webp" alt="Personal Record logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Glanbia-ON.webp" alt="Glanbia ON logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Muscle-Tech.webp" alt="Muscle Tech logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Rule1.webp" alt="Rule1 logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Glanbia-ISO-Pure.webp" alt="Glanbia ISO Pure logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Nutrex.webp" alt="Nutrex logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Cellucor.webp" alt="Cellucor logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Dymatize.webp" alt="Dymatize logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/ProSupps.webp" alt="ProSupps logo" loading="lazy"></div>
-                  </div>
-                </div>
-              </div>
-              <div class="brand-counter-card">
-                <div class="brand-mask">
-                  <div class="brand-track delay-3">
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/1BPI.webp" alt="1BPI logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Gaspari.webp" alt="Gaspari logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Universal-Nutrition.webp" alt="Universal Nutrition logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/EFX.webp" alt="EFX logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/King-Line.webp" alt="King Line logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Muscle-Pharm.webp" alt="Muscle Pharm logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Russian-Bear.webp" alt="Russian Bear logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Smart-Shake.webp" alt="Smart Shake logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Personal-Record.webp" alt="Personal Record logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Glanbia-ON.webp" alt="Glanbia ON logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Muscle-Tech.webp" alt="Muscle Tech logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Rule1.webp" alt="Rule1 logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Glanbia-ISO-Pure.webp" alt="Glanbia ISO Pure logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Nutrex.webp" alt="Nutrex logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Cellucor.webp" alt="Cellucor logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Dymatize.webp" alt="Dymatize logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/ProSupps.webp" alt="ProSupps logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Scivation.webp" alt="Scivation logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Quest.webp" alt="Quest logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/MHP.webp" alt="MHP logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Muscle-Meds.webp" alt="Muscle Meds logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/1BPI.webp" alt="1BPI logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Gaspari.webp" alt="Gaspari logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Universal-Nutrition.webp" alt="Universal Nutrition logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/EFX.webp" alt="EFX logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/King-Line.webp" alt="King Line logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Muscle-Pharm.webp" alt="Muscle Pharm logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Russian-Bear.webp" alt="Russian Bear logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Smart-Shake.webp" alt="Smart Shake logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Personal-Record.webp" alt="Personal Record logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Glanbia-ON.webp" alt="Glanbia ON logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Muscle-Tech.webp" alt="Muscle Tech logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Rule1.webp" alt="Rule1 logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Glanbia-ISO-Pure.webp" alt="Glanbia ISO Pure logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Nutrex.webp" alt="Nutrex logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Cellucor.webp" alt="Cellucor logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Dymatize.webp" alt="Dymatize logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/ProSupps.webp" alt="ProSupps logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Scivation.webp" alt="Scivation logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Quest.webp" alt="Quest logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/MHP.webp" alt="MHP logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Muscle-Meds.webp" alt="Muscle Meds logo" loading="lazy"></div>
-                  </div>
-                </div>
-              </div>
-              <div class="brand-counter-card">
-                <div class="brand-mask">
-                  <div class="brand-track delay-4">
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/King-Line.webp" alt="King Line logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Muscle-Pharm.webp" alt="Muscle Pharm logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Russian-Bear.webp" alt="Russian Bear logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Smart-Shake.webp" alt="Smart Shake logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Personal-Record.webp" alt="Personal Record logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Glanbia-ON.webp" alt="Glanbia ON logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Muscle-Tech.webp" alt="Muscle Tech logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Rule1.webp" alt="Rule1 logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Glanbia-ISO-Pure.webp" alt="Glanbia ISO Pure logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Nutrex.webp" alt="Nutrex logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Cellucor.webp" alt="Cellucor logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Dymatize.webp" alt="Dymatize logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/ProSupps.webp" alt="ProSupps logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Scivation.webp" alt="Scivation logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Quest.webp" alt="Quest logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/MHP.webp" alt="MHP logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Muscle-Meds.webp" alt="Muscle Meds logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/1BPI.webp" alt="1BPI logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Gaspari.webp" alt="Gaspari logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Universal-Nutrition.webp" alt="Universal Nutrition logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/EFX.webp" alt="EFX logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/King-Line.webp" alt="King Line logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Muscle-Pharm.webp" alt="Muscle Pharm logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Russian-Bear.webp" alt="Russian Bear logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Smart-Shake.webp" alt="Smart Shake logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Personal-Record.webp" alt="Personal Record logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Glanbia-ON.webp" alt="Glanbia ON logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Muscle-Tech.webp" alt="Muscle Tech logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Rule1.webp" alt="Rule1 logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Glanbia-ISO-Pure.webp" alt="Glanbia ISO Pure logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Nutrex.webp" alt="Nutrex logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Cellucor.webp" alt="Cellucor logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Dymatize.webp" alt="Dymatize logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/ProSupps.webp" alt="ProSupps logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Scivation.webp" alt="Scivation logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Quest.webp" alt="Quest logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/MHP.webp" alt="MHP logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Muscle-Meds.webp" alt="Muscle Meds logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/1BPI.webp" alt="1BPI logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Gaspari.webp" alt="Gaspari logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Universal-Nutrition.webp" alt="Universal Nutrition logo" loading="lazy"></div>
-                  <div class="brand-logo-slide"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/EFX.webp" alt="EFX logo" loading="lazy"></div>
-                  </div>
+
+            <div class="fn-marquee-wrap">
+              <div class="fn-marquee-row">
+                <div class="fn-marquee-track">
+                  <div class="fn-brand-chip"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Glanbia-ON.webp" alt="Glanbia ON logo" loading="eager" decoding="async"></div>
+                  <div class="fn-brand-chip"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Muscle-Tech.webp" alt="Muscle Tech logo" loading="eager" decoding="async"></div>
+                  <div class="fn-brand-chip"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Rule1.webp" alt="Rule1 logo" loading="eager" decoding="async"></div>
+                  <div class="fn-brand-chip"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Glanbia-ISO-Pure.webp" alt="Glanbia ISO Pure logo" loading="eager" decoding="async"></div>
+                  <div class="fn-brand-chip"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Nutrex.webp" alt="Nutrex logo" loading="eager" decoding="async"></div>
+                  <div class="fn-brand-chip"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Cellucor.webp" alt="Cellucor logo" loading="eager" decoding="async"></div>
+                  <div class="fn-brand-chip"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Dymatize.webp" alt="Dymatize logo" loading="eager" decoding="async"></div>
+                  <div class="fn-brand-chip"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/ProSupps.webp" alt="ProSupps logo" loading="eager" decoding="async"></div>
+                  <div class="fn-brand-chip"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Scivation.webp" alt="Scivation logo" loading="eager" decoding="async"></div>
+                  <div class="fn-brand-chip"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Quest.webp" alt="Quest logo" loading="eager" decoding="async"></div>
+                  <div class="fn-brand-chip"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/MHP.webp" alt="MHP logo" loading="eager" decoding="async"></div>
+                  <div class="fn-brand-chip"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Muscle-Meds.webp" alt="Muscle Meds logo" loading="eager" decoding="async"></div>
+                  <div class="fn-brand-chip"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/1BPI.webp" alt="BPI logo" loading="eager" decoding="async"></div>
+                  <div class="fn-brand-chip"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Gaspari.webp" alt="Gaspari logo" loading="eager" decoding="async"></div>
+                  <div class="fn-brand-chip"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Universal-Nutrition.webp" alt="Universal Nutrition logo" loading="eager" decoding="async"></div>
+                  <div class="fn-brand-chip"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/EFX.webp" alt="EFX logo" loading="eager" decoding="async"></div>
+                  <div class="fn-brand-chip"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/King-Line.webp" alt="King Line logo" loading="eager" decoding="async"></div>
+                  <div class="fn-brand-chip"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Muscle-Pharm.webp" alt="Muscle Pharm logo" loading="eager" decoding="async"></div>
+                  <div class="fn-brand-chip"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Russian-Bear.webp" alt="Russian Bear logo" loading="eager" decoding="async"></div>
+                  <div class="fn-brand-chip"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Smart-Shake.webp" alt="Smart Shake logo" loading="eager" decoding="async"></div>
+                  <div class="fn-brand-chip"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Personal-Record.webp" alt="Personal Record logo" loading="eager" decoding="async"></div>
+                  <div class="fn-brand-chip"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Glanbia-ON.webp" alt="Glanbia ON logo" loading="eager" decoding="async"></div>
+                  <div class="fn-brand-chip"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Muscle-Tech.webp" alt="Muscle Tech logo" loading="eager" decoding="async"></div>
+                  <div class="fn-brand-chip"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Rule1.webp" alt="Rule1 logo" loading="eager" decoding="async"></div>
+                  <div class="fn-brand-chip"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Glanbia-ISO-Pure.webp" alt="Glanbia ISO Pure logo" loading="eager" decoding="async"></div>
+                  <div class="fn-brand-chip"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Nutrex.webp" alt="Nutrex logo" loading="eager" decoding="async"></div>
+                  <div class="fn-brand-chip"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Cellucor.webp" alt="Cellucor logo" loading="eager" decoding="async"></div>
+                  <div class="fn-brand-chip"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Dymatize.webp" alt="Dymatize logo" loading="eager" decoding="async"></div>
+                  <div class="fn-brand-chip"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/ProSupps.webp" alt="ProSupps logo" loading="eager" decoding="async"></div>
+                  <div class="fn-brand-chip"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Scivation.webp" alt="Scivation logo" loading="eager" decoding="async"></div>
+                  <div class="fn-brand-chip"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Quest.webp" alt="Quest logo" loading="eager" decoding="async"></div>
+                  <div class="fn-brand-chip"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/MHP.webp" alt="MHP logo" loading="eager" decoding="async"></div>
+                  <div class="fn-brand-chip"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Muscle-Meds.webp" alt="Muscle Meds logo" loading="eager" decoding="async"></div>
+                  <div class="fn-brand-chip"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/1BPI.webp" alt="BPI logo" loading="eager" decoding="async"></div>
+                  <div class="fn-brand-chip"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Gaspari.webp" alt="Gaspari logo" loading="eager" decoding="async"></div>
+                  <div class="fn-brand-chip"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Universal-Nutrition.webp" alt="Universal Nutrition logo" loading="eager" decoding="async"></div>
+                  <div class="fn-brand-chip"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/EFX.webp" alt="EFX logo" loading="eager" decoding="async"></div>
+                  <div class="fn-brand-chip"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/King-Line.webp" alt="King Line logo" loading="eager" decoding="async"></div>
+                  <div class="fn-brand-chip"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Muscle-Pharm.webp" alt="Muscle Pharm logo" loading="eager" decoding="async"></div>
+                  <div class="fn-brand-chip"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Russian-Bear.webp" alt="Russian Bear logo" loading="eager" decoding="async"></div>
+                  <div class="fn-brand-chip"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Smart-Shake.webp" alt="Smart Shake logo" loading="eager" decoding="async"></div>
+                  <div class="fn-brand-chip"><img src="https://www.firstnutrition.com/wp-content/uploads/2026/05/Personal-Record.webp" alt="Personal Record logo" loading="eager" decoding="async"></div>
                 </div>
               </div>
             </div>
@@ -1035,14 +843,14 @@
                 <div class="absolute -bottom-20 -left-20 w-60 h-60 rounded-full bg-white opacity-10 blur-3xl"></div>
                 <div class="relative">
                   <div class="inline-flex items-center gap-3 mb-6">
-                    <span class="text-[11px] font-black uppercase tracking-[0.25em] text-white/80"></span>
+                    
                     <span class="h-px w-12 bg-white/60"></span>
                   </div>
-                  <h3 class="text-3xl lg:text-4xl font-black tracking-[-0.03em] text-white leading-tight mb-8">First Nutrition is more than a distributor</h3>
-                  <p class="text-[15.5px] leading-relaxed text-white/90 mb-4"></p>
+                  <h3 class="text-3xl lg:text-4xl font-black tracking-[-0.03em] text-white leading-tight mb-8">First Nutrition is more than a distributor.</h3>
+                  
                   <p class="text-xl lg:text-2xl font-black text-white leading-tight mb-8">We are a partner built for this region — with the experience, the structure, and the execution required to make performance possible.</p>
                   <div class="p-6 rounded-2xl bg-white/10 backdrop-blur border border-white/20">
-                    <p class="text-xl lg:text-2xl font-black tracking-tight leading-tight text-white">In a complex market, <span class="-[#f5b94d] decoration-4 underline-offset-4">clarity wins</span>.<br />In a changing market, <span class="">execution wins</span>.</p>
+                    <p class="text-xl lg:text-2xl font-black tracking-tight leading-tight text-white">In a complex market, clarity wins.<br />In a changing market, execution wins.</p>
                   </div>
                 </div>
               </div>
