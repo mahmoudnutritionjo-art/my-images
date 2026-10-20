@@ -179,6 +179,164 @@
       position: relative; z-index: 2; margin: 0 auto; max-width: 760px; color: rgba(255,255,255,.86);
       font-size: clamp(1rem, 1.3vw, 1.25rem); line-height: 1.6; font-weight: 700;
     }
+
+    /* ==========================================================
+       VISUAL ENHANCEMENTS (PURE CSS & FX - NO CONTENT CHANGES)
+       ========================================================== */
+
+    /* 1. Glowing Progress Bar */
+    #fnxProgress {
+      box-shadow: 0 0 14px rgba(244, 49, 49, 0.85), 0 0 6px rgba(245, 185, 77, 0.6);
+    }
+
+    /* 2. Animated Shimmer on Gradient Text */
+    @keyframes textShimmer {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    .text-gradient-red {
+      background: linear-gradient(135deg, #f43131 0%, #ff8585 35%, #f43131 65%, #ff5252 100%);
+      background-size: 200% auto;
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      animation: textShimmer 5s ease-in-out infinite;
+    }
+    .text-gradient-gold {
+      background: linear-gradient(135deg, #f5b94d 0%, #ffe299 35%, #e6a02e 65%, #f5b94d 100%);
+      background-size: 200% auto;
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      animation: textShimmer 5s ease-in-out infinite;
+    }
+
+    /* 3. Ambient Breathing Glow for Hero Orbs & Anniversary Card */
+    @keyframes ambientPulse {
+      0%, 100% { transform: scale(1) translate(0, 0); }
+      50% { transform: scale(1.12) translate(12px, -12px); }
+    }
+    main > section:first-of-type > div.blur-\[120px\],
+    main > section:first-of-type > div.blur-\[100px\] {
+      animation: ambientPulse 9s ease-in-out infinite;
+    }
+
+    @keyframes anniversarySweep {
+      0% { transform: translateX(-120%) skewX(-20deg); }
+      40%, 100% { transform: translateX(220%) skewX(-20deg); }
+    }
+    .fn-anniversary-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; width: 45%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.06), transparent);
+      animation: anniversarySweep 7s ease-in-out infinite;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .fn-anniversary-logo {
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), filter 0.6s ease;
+    }
+    .fn-anniversary-card:hover .fn-anniversary-logo {
+      transform: scale(1.03) translateY(-4px);
+      filter: drop-shadow(0 32px 64px rgba(245, 185, 77, 0.55));
+    }
+
+    /* 4. Interactive Mouse-Tracking Spotlight on Cards */
+    .fx-spotlight {
+      position: relative;
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, box-shadow 0.4s ease;
+    }
+    .fx-spotlight::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: radial-gradient(
+        550px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+        rgba(244, 49, 49, 0.13),
+        transparent 45%
+      );
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .fx-spotlight:hover::after {
+      opacity: 1;
+    }
+    .fx-spotlight:hover {
+      transform: translateY(-4px);
+    }
+
+    /* 5. Cinematic Diagonal Light Sweep on Feature Images */
+    .fx-img-shine {
+      position: relative;
+      overflow: hidden;
+    }
+    .fx-img-shine::after {
+      content: '';
+      position: absolute;
+      top: 0; left: -120%;
+      width: 65%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.18), transparent);
+      transform: skewX(-25deg);
+      transition: left 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+      pointer-events: none;
+      z-index: 3;
+    }
+    .group:hover .fx-img-shine::after,
+    .fx-img-shine:hover::after {
+      left: 140%;
+    }
+
+    /* 6. Interactive Marquee Pause & Individual Brand Chip Pop */
+    .fn-marquee-wrap:hover .fn-marquee-track {
+      animation-play-state: paused;
+    }
+    .fn-brand-chip {
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease, border-color 0.35s ease, opacity 0.35s ease;
+    }
+    .fn-brand-chip img {
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .fn-marquee-track:hover .fn-brand-chip {
+      opacity: 0.65;
+    }
+    .fn-marquee-track .fn-brand-chip:hover {
+      opacity: 1;
+      transform: translateY(-6px) scale(1.04);
+      border-color: rgba(244, 49, 49, 0.5);
+      box-shadow: 0 16px 32px rgba(244, 49, 49, 0.25), 0 0 0 2px rgba(244, 49, 49, 0.15);
+    }
+    .fn-marquee-track .fn-brand-chip:hover img {
+      transform: scale(1.08);
+    }
+
+    /* 7. Awareness Reels Play Button Ripple & Card Glow */
+    @keyframes playPulseRing {
+      0% { box-shadow: 0 0 0 0 rgba(244, 49, 49, 0.7); }
+      70% { box-shadow: 0 0 0 16px rgba(244, 49, 49, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(244, 49, 49, 0); }
+    }
+    #awareness a.group {
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    }
+    #awareness a.group:hover {
+      box-shadow: 0 22px 45px -10px rgba(244, 49, 49, 0.22), 0 10px 20px -5px rgba(10, 11, 15, 0.08) !important;
+    }
+    #awareness a.group:hover .w-12.h-12.rounded-full {
+      animation: playPulseRing 1.5s infinite;
+    }
+
+    /* 8. Pill Tags Hover Micro-interaction */
+    #awareness span.rounded-full {
+      transition: all 0.3s ease;
+      cursor: default;
+    }
+    #awareness span.rounded-full:hover {
+      border-color: #f43131;
+      color: #f43131;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(244, 49, 49, 0.12);
+    }
   </style>
 </head>
 <body>
@@ -268,9 +426,12 @@
         <div class="relative max-w-[1320px] mx-auto px-6 lg:px-10">
           
           <div class="reveal w-full mb-14 lg:mb-16">
-            <div class="inline-flex items-center gap-3 mb-4">
-              <span class="h-px w-10 bg-[#f43131]"></span>
-              <span class="text-[11px] font-black uppercase tracking-[0.25em] text-[#505866]">Our Story</span>
+            <div class="flex justify-center mb-4">
+              <div class="inline-flex items-center gap-3">
+                <span class="h-px w-10 bg-[#f43131]"></span>
+                <span class="text-[15px] font-black uppercase tracking-[0.25em] text-[#505866]">Our Story</span>
+                <span class="h-px w-10 bg-[#f43131]"></span>
+              </div>
             </div>
             
             <h2 class="text-[clamp(2.2rem,3.8vw,3.4rem)] font-black tracking-[-0.03em] leading-[1.15] text-[#0a0b0f] mb-6">
@@ -324,7 +485,7 @@
           <div class="reveal text-center mb-14 lg:mb-16">
             <div class="inline-flex items-center gap-3 mb-4">
               <span class="h-px w-10 bg-[#f43131]"></span>
-              <span class="text-[11px] font-black uppercase tracking-[0.25em] text-[#f5b94d]">What Drives Us</span>
+              <span class="text-[15px] font-black uppercase tracking-[0.25em] text-[#f5b94d]">What Drives Us</span>
               <span class="h-px w-10 bg-[#f43131]"></span>
             </div>
             <h2 class="text-[clamp(2.2rem,3.8vw,3.4rem)] font-black tracking-[-0.03em] leading-[1.12] mb-3">
@@ -412,10 +573,12 @@
         <div class="relative max-w-[1320px] mx-auto px-6 lg:px-10">
           
           <div class="reveal mb-14 lg:mb-16">
-            <div class="inline-flex items-center gap-3 mb-4">
-              <span class="h-px w-10 bg-[#f43131]"></span>
-              <span class="text-[11px] font-black uppercase tracking-[0.25em] text-[#f43131]">Awareness &amp; Education</span>
-              <span class="h-px w-10 bg-[#f43131]"></span>
+            <div class="flex justify-center mb-4">
+              <div class="inline-flex items-center gap-3">
+                <span class="h-px w-10 bg-[#f43131]"></span>
+                <span class="text-[15px] font-black uppercase tracking-[0.25em] text-[#f43131]">Awareness &amp; Education</span>
+                <span class="h-px w-10 bg-[#f43131]"></span>
+              </div>
             </div>
             
             <div class="grid lg:grid-cols-12 gap-8 lg:gap-10 items-center">
@@ -567,13 +730,18 @@
             </div>
 
             <div>
-              <div class="reveal inline-flex items-center gap-3 mb-4">
-                <span class="h-px w-10 bg-[#f43131]"></span>
-                <span class="text-[11px] font-black uppercase tracking-[0.25em] text-[#f5b94d]">Our Brands</span>
+              <div class="w-fit mb-6">
+                <div class="reveal flex justify-center mb-4">
+                  <div class="inline-flex items-center gap-3">
+                    <span class="h-px w-10 bg-[#f43131]"></span>
+                    <span class="text-[15px] font-black uppercase tracking-[0.25em] text-[#f5b94d]">Our Brands</span>
+                    <span class="h-px w-10 bg-[#f43131]"></span>
+                  </div>
+                </div>
+                <h2 class="reveal reveal-delay-1 text-[clamp(2.2rem,3.8vw,3.4rem)] font-black tracking-[-0.03em] leading-[1.12] text-white">
+                  More than a <span class="text-gradient-red">brand portfolio.</span>
+                </h2>
               </div>
-              <h2 class="reveal reveal-delay-1 text-[clamp(2.2rem,3.8vw,3.4rem)] font-black tracking-[-0.03em] leading-[1.12] text-white mb-6">
-                More than a <span class="text-gradient-red">brand portfolio.</span>
-              </h2>
               <div class="reveal reveal-delay-2 space-y-4 text-[15.5px] leading-relaxed text-white/75">
                 <p>Over the years, we have built strong, direct relationships with many of the world’s most respected sports nutrition brands.</p>
                 <p class="text-white font-semibold">These are not just names on a portfolio.</p>
@@ -630,7 +798,7 @@
           <div class="reveal text-center mb-14 lg:mb-16">
             <div class="inline-flex items-center gap-3 mb-4">
               <span class="h-px w-10 bg-[#f43131]"></span>
-              <span class="text-[11px] font-black uppercase tracking-[0.25em] text-[#f43131]">Our Capabilities</span>
+              <span class="text-[15px] font-black uppercase tracking-[0.25em] text-[#f43131]">Our Capabilities</span>
               <span class="h-px w-10 bg-[#f43131]"></span>
             </div>
             <h2 class="text-[clamp(2.2rem,3.8vw,3.4rem)] font-black tracking-[-0.03em] leading-[1.12] text-[#0a0b0f]">
@@ -732,17 +900,23 @@
 
         <div class="relative max-w-[1320px] mx-auto px-6 lg:px-10">
           
-          <div class="reveal mb-14 max-w-4xl">
-            <div class="inline-flex items-center gap-3 mb-4">
-              <span class="text-[11px] font-black uppercase tracking-[0.25em] text-[#f5b94d]">Why First Nutrition</span>
-              <span class="h-px w-10 bg-[#f5b94d]"></span>
+          <div class="reveal mb-14">
+            <div class="flex justify-center mb-4">
+              <div class="inline-flex items-center gap-3">
+                <span class="h-px w-10 bg-[#f43131]"></span>
+                <span class="text-[15px] font-black uppercase tracking-[0.25em] text-[#f5b94d]">Why First Nutrition</span>
+                <span class="h-px w-10 bg-[#f43131]"></span>
+              </div>
             </div>
-            <h2 class="text-[clamp(2.2rem,3.8vw,3.4rem)] font-black tracking-[-0.03em] leading-[1.12] text-white mb-4">
-              Built for this region. <span class="font-serif italic text-gradient-gold">Ready for what comes next.</span>
-            </h2>
-            <div class="space-y-1 text-base lg:text-lg text-white/70 leading-relaxed">
-              <p>After 30 years in this industry, one thing is clear:</p>
-              <p class="text-white font-semibold">This region rewards those who understand it — and challenges those who don’t.</p>
+            <div class="max-w-4xl">
+              <h2 class="text-[clamp(2.2rem,3.8vw,3.4rem)] font-black tracking-[-0.03em] leading-[1.12] text-white mb-4">
+                Built for this region.<br />
+                <span class="font-serif italic text-gradient-gold">Ready for what comes next.</span>
+              </h2>
+              <div class="space-y-1 text-base lg:text-lg text-white/70 leading-relaxed">
+                <p>After 30 years in this industry, one thing is clear:</p>
+                <p class="text-white font-semibold">This region rewards those who understand it — and challenges those who don’t.</p>
+              </div>
             </div>
           </div>
 
@@ -804,6 +978,42 @@
       } else {
         items.forEach(function (item) { item.classList.add('visible'); });
       }
+
+      /* --- Visual Enhancements Injection (Zero HTML Content Modification) --- */
+
+      // 1. Seamless Infinite Marquee Duplication
+      var marqueeTrack = document.querySelector('.fn-marquee-track');
+      if (marqueeTrack) {
+        marqueeTrack.innerHTML += marqueeTrack.innerHTML;
+      }
+
+      // 2. Attach Glass Light Sweep to Feature Image Containers
+      var imageContainers = document.querySelectorAll(
+        '#story .lg\\:col-span-3 > div, ' +
+        '.h-72.overflow-hidden, ' +
+        '#brands .aspect-square, ' +
+        '.min-h-\\[400px\\].rounded-\\[2rem\\]'
+      );
+      imageContainers.forEach(function (container) {
+        container.classList.add('fx-img-shine');
+      });
+
+      // 3. Attach Interactive Mouse-Tracking Spotlight to Feature Cards
+      var spotlightCards = document.querySelectorAll(
+        '.fn-anniversary-card, ' +
+        '.from-\\[\\#12141a\\].to-\\[\\#1c1f26\\], ' +
+        '.from-\\[\\#0a0b0f\\].to-\\[\\#1f2229\\], ' +
+        '.glass.border-white\\/10, ' +
+        '.from-\\[\\#f43131\\].to-\\[\\#b91818\\]'
+      );
+      spotlightCards.forEach(function (card) {
+        card.classList.add('fx-spotlight');
+        card.addEventListener('mousemove', function (e) {
+          var rect = card.getBoundingClientRect();
+          card.style.setProperty('--mouse-x', (e.clientX - rect.left) + 'px');
+          card.style.setProperty('--mouse-y', (e.clientY - rect.top) + 'px');
+        });
+      });
     })();
   </script>
 </body>
